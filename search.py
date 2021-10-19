@@ -8,7 +8,7 @@ functions.
 import sys
 from collections import deque
 
-from Utils import *
+from utils import *
 
 
 class Problem:
