@@ -9,6 +9,6 @@ Here we have a vacuum-cleaning agent that can sense the environment and perform 
 - The actions available for the agent are: Left, Right, Down, Up, Suck. Each action takes place in one time "step".
 - Each of the actions will incur a step of 1.
 - At the end of each time step, each remaining dirty square will incur a cost of 2.
-- ___________________________________________________________________________________________________________________________________________________________________________________
+___________________________________________________________________________________________________________________________________________________________________________________
 
 Christian Cox
