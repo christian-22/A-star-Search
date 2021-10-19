@@ -11,7 +11,7 @@ Here we have a vacuum-cleaning agent that can sense the environment and perform 
 - At the end of each time step, each remaining dirty square will incur a cost of 2.
 ___________________________________________________________________________________________________________________________________________________________________________________
 
-**Search.py** is a file provided from the course:
+**Search.py** and **Utils.py** are files provided from the course:
 _"Python code for the book Artificial Intelligence: A Modern Approach. You can use this in conjunction with a course on AI, or for study on your own."_
 
 https://github.com/aimacode/aima-python
