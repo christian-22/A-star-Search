@@ -1,6 +1,6 @@
 **CSC 4444: Artificial Intelligence**
 
-Implementing A* Search (tree search) in python 3.10 given a scenario. 
+Implementing A* Search (tree search) in python 3.10 for the given scenario:
 
 ___________________________________________________________________________________________________________________________________________________________________________________
 Here we have a vacuum-cleaning agent that can sense the environment and perform actions to move around and vacuum/clean dirty squares.
