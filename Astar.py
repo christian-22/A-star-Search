@@ -15,23 +15,23 @@ class VacuumProblem(Problem):
         state. The result would typically be a list, but if there are
         many actions, consider yielding them one at a time in an
         iterator, rather than building them all at once."""
-    def vacuum_actions(self, state):
-        vacuum_actions = ['Suck', 'Left', 'Right', 'Up', 'Down']
+    def actions(self, state):
+        actions = ['Suck', 'Left', 'Right', 'Up', 'Down']
         x, y = state[0]
 
         # removing actions based on where the agent is located, because the agent can only perform actions based on its environment
         # if (x,y) is not in the dirty state list, then you also cant perform suck
         if (x, y) not in state[1]:
-            vacuum_actions.remove('Suck')
+            actions.remove('Suck')
         if x == 1:
-            vacuum_actions.remove('Left')
+            actions.remove('Left')
         if y == 1:
-            vacuum_actions.remove('Down')
+            actions.remove('Down')
         if x == 5:
-            vacuum_actions.remove('Right')
+            actions.remove('Right')
         if y == 5:
-            vacuum_actions.remove('Up')
-        return vacuum_actions
+            actions.remove('Up')
+        return actions
 
     # making sure the coordinates of the agent are updated per state when performing an action in a direction
     """Return the state that results from executing the given
