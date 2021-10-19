@@ -1,4 +1,4 @@
-from Search import *
+from search import *
 
 # using class Problem from Search.py file provided
 """The abstract class for a formal problem. You should subclass
