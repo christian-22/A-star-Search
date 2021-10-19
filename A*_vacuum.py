@@ -134,13 +134,13 @@ environment = VacuumProblem(((1,1),((1,5),(2,5),(3,5),(4,5),(5,5))))
 # all heuristic 1 data
 print('Heuristic 1: ')
 # astar_search method provided Search.py
-print('Optimal Path:', astar_search(problem, problem.heuristic1, True).solution())
-print('Cost:', problem.total_cost)
+print('Optimal Path:', astar_search(environment, environment.heuristic1, True).solution())
+print('Cost:', environment.total_cost)
 print('f(n) values:', 0)
 
 # all heuristic 2 data
 print('\n\rHeuristic 2: ')
 # astar_search method provided Search.py
-print('Optimal Path:', astar_search(problem, problem.heuristic2, True).solution())
-print('Cost:', problem.total_cost)
+print('Optimal Path:', astar_search(environment, environment.heuristic2, True).solution())
+print('Cost:', environment.total_cost)
 print('f(n) values:', 0)
