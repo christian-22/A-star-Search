@@ -129,7 +129,7 @@ class VacuumProblem(Problem):
 
 
 # add start state and dirty squares to the environment
-problem = VacuumProblem(((1,1),((1,5),(2,5),(3,5),(4,5),(5,5))))
+environment = VacuumProblem(((1,1),((1,5),(2,5),(3,5),(4,5),(5,5))))
 
 # all heuristic 1 data
 print('Heuristic 1: ')
