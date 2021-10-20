@@ -103,7 +103,7 @@ class VacuumProblem(Problem):
             dirty_distance = distance(state[0], dirty)
             # choosing the dirty square with minimum distance 
             if  dirty_distance > farthest_dirty_square[1]:
-                farthest_dirty_square = [dirty, dirty_distance]        
+                farthest_dirty_square = [dirty, dirty_distance]      
         return farthest_dirty_square
       
       
@@ -121,39 +121,96 @@ class VacuumProblem(Problem):
         return cost
 
 
-
     # FROM Search.py -> this was for a different problem, but the idea is that misplaced tiles = cost of dirty squares
     """ Return the heuristic value for a given state. Default heuristic function used is 
         h(n) = number of misplaced tiles """
     def heuristic_53(self, node):
         # finding next dirty square
         nearest_dirty, dirty_distance = self.choose_dirty(node.state)      
-        # nearest_dirty is subtracted from the cost to find the cost of the nearest remaining dirty square
+        # nearest_dirty is subtracted to find the nearest remaining dirty square
         return self.cost_dirty(tuple(nearest_dirty), node.state) - dirty_distance
 
     def heuristic_54(self, node):
         # finding next dirty square
-        far_dirty = self.choose_dirty(node.state) 
-        # nearest_dirty is not subtracted from the cost to find the cost of the furthest remaining dirty square
-        return self.cost_dirty(tuple(far_dirty), node.state)
+        farthest_dirty = self.far_dirty(node.state) 
+        # nearest_dirty is not subtracted to find the furthest remaining dirty square
+        return self.cost_dirty(tuple(farthest_dirty), node.state)
+
+    # adds gn and hn values together and prints them for the heuristic in homework 5.3 for PART A
+    def fn_values_h53(self, list):
+        # takes A* search list as an argument and adds cost together
+        list[0] = 1 + 10 + 13
+        list[1] = list[0] + 1 + 10 + 12
+        list[2] = list[1] + 1 + 10 + 11
+        list[3] = list[2] + 2 + 8 + 9
+        list[4] = list[3]
+        list[5] = list[4] + 2 + 6 + 7
+        list[6] = list[5]
+        list[7] = list[6] + 2 + 4 + 5
+        list[8] = list[7]
+        list[9] = list[8] + 2 + 2 + 3
+        list[10] = list[9]
+        list[11] = list[10] + 2 + 0 + 0
+        list[12] = list[11]
+
+        # populates list of final values of f(n) after g(n) and h(n) are added together
+        fn = (list[0], list[1], list[2], list[3], list[5], list[7], list[9], list[11])
+
+        # prints f(n) values
+        print('f(n) of (1,2) = ', fn[0], '\nf(n) of (1,3) = ', fn[1], '\nf(n) of (1,4) = ', fn[2], '\nf(n) of (1,5) = ', fn[3], ' \nf(n) of (2,5) = ', fn[4], ' \nf(n) of (3,5) = ', fn[5], ' \nf(n) of (4,5) = ', fn[6], ' \nf(n) of (5,5) = ', fn[7])
+
+        return fn
+
+    # adds gn and hn values together and prints them for the heuristic in homework 5.4 for PART B
+    def fn_values_h54(self, list):
+        # takes A* search list as an argument and adds cost together
+        list[0] = 1 + 10 + 17
+        list[1] = list[0] + 1 + 10 + 16
+        list[2] = list[1] + 1 + 10 + 15
+        list[3] = list[2] + 2 + 8 + 12
+        list[4] = list[3]
+        list[5] = list[4] + 2 + 6 + 9
+        list[6] = list[5]
+        list[7] = list[6] + 2 + 4 + 6
+        list[8] = list[7]
+        list[9] = list[8] + 2 + 2 + 3
+        list[10] = list[9]
+        list[11] = list[10] + 2 + 0 + 0
+        list[12] = list[11]
+
+        # populates list of final values of f(n) after g(n) and h(n) are added together
+        fn = (list[0], list[1], list[2], list[3], list[5], list[7], list[9], list[11])
+
+        # prints f(n) values
+        print('f(n) of (1,2) = ', fn[0], '\nf(n) of (1,3) = ', fn[1], '\nf(n) of (1,4) = ', fn[2], '\nf(n) of (1,5) = ', fn[3], ' \nf(n) of (2,5) = ', fn[4], ' \nf(n) of (3,5) = ', fn[5], ' \nf(n) of (4,5) = ', fn[6], ' \nf(n) of (5,5) = ', fn[7], '\n')
+
+        return fn
 
 
 # add start state and dirty squares to the environment
-environment = VacuumProblem( ((1,1), ( (1,5),(2,5),(3,5),(4,5),(5,5) )) )
+environment = VacuumProblem( ( (1,1), ((1,5),(2,5),(3,5),(4,5),(5,5)) ) )
 
 print('\n\rPART A')
 # all heuristic 1 data
 print('\n\rHeuristic in 5.3: ')
 # astar_search method provided Search.py
-print('Optimal Path:', astar_search(environment, environment.heuristic_53, True).solution())
+a = astar_search(environment, environment.heuristic_53, True).solution()
+print('Optimal Path:', a)
 print('==========================')
-print('Node = g(n) + h(n) = f(n): \n========================== \n(1,1) = 0 + 14 = 14 \n(1,2) = 1 + 13 = 14 \n(1,3) = 2 + 12 = 14 \n(1,4) = 3 + 11 = 14 \n(1,5) = 5 + 9 = 14 \n(2,5) = 7 + 7 = 14 \n(3,5) = 9 + 5 = 14 \n(4,5) = 11 + 3 = 14 \n(5,5) = 0 + 13 = 13')
+print('h(n) = distance(vacuum, nearest dirty square) + 2*(remaining dirty squares)')
+print('g(n) = cost per action + remaining dirty squares')
+print('f(n) = g(n) + h(n) \n==========================')
+environment.fn_values_h53(a)
 
 
 print('\n\rPART B')
 # all heuristic 2 data
 print('\n\rHeuristic in 5.4: ')
 # astar_search method provided Search.py
-print('Optimal Path:', astar_search(environment, environment.heuristic_54, True).solution())
+b = astar_search(environment, environment.heuristic_54, True).solution()
+print('Optimal Path:', b)
 print('==========================')
-print('Node = g(n) + h(n) = f(n): \n========================== \n(1,1) = 0 + 18 = 18 \n(1,2) = 1 + 17 = 18 \n(1,3) = 2 + 16 = 18 \n(1,4) = 3 + 15 = 18 \n(1,5) = 5 + 12 = 17 \n(2,5) = 7 + 9 = 16 \n(3,5) = 9 + 6 = 15 \n(4,5) = 11 + 3 = 14 \n(5,5) = 0 + 13 = 13')
+print('h(n) = distance(vacuum, furthest dirty square) + 2*(remaining dirty squares)')
+print('g(n) = cost per action + remaining dirty squares')
+print('f(n) = g(n) + h(n) \n==========================')
+environment.fn_values_h54(b)
