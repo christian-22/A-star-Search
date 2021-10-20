@@ -1,3 +1,5 @@
+Program can be run in terminal from **Astar-vacuum.py**
+
 **CSC 4444: Artificial Intelligence**
 
 Implementing A* Search (tree search) in python 3.10 for the given scenario:
