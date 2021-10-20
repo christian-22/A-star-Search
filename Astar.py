@@ -19,7 +19,7 @@ class VacuumProblem(Problem):
         actions = ['Suck', 'Left', 'Right', 'Up', 'Down']
         x, y = state[0]
 
-        # removing actions based on where the agent is located, because the agent can only perform actions based on its environment
+        # removing actions based on where the agent is located, because the agent can only perform actions based on its problem
         # if (x,y) is not in the dirty state list, then you also cant perform suck
         if (x, y) not in state[1]:
             actions.remove('Suck')
@@ -86,19 +86,29 @@ class VacuumProblem(Problem):
       
      # chooses next dirty square to be cleaned by the vacuum based on smallest distance to current state
     def choose_dirty(self, state):
-        nearest_dirty = [[0,0], 0]
-        
+        nearest_dirty_square = [[0,0], 5]
         # distance between current state and dirty squares
         for dirty in state[1]:
             dirty_distance = distance(state[0], dirty)
-            # choosing the dirty square with the least distance 
-            if  dirty_distance < nearest_dirty[1]:
-                nearest_dirty = [dirty, dirty_distance]        
-        return nearest_dirty
+            # choosing the dirty square with minimum distance 
+            if  dirty_distance < nearest_dirty_square[1]:
+                nearest_dirty_square = [dirty, dirty_distance]        
+        return nearest_dirty_square
+
+    # chooses next dirty square to be cleaned by the vacuum based on smallest distance to current state
+    def far_dirty(self, state):
+        farthest_dirty_square = [[0,0], 5]
+        # distance between current state and dirty squares
+        for dirty in state[1]:
+            dirty_distance = distance(state[0], dirty)
+            # choosing the dirty square with minimum distance 
+            if  dirty_distance > farthest_dirty_square[1]:
+                farthest_dirty_square = [dirty, dirty_distance]        
+        return farthest_dirty_square
       
       
       
-    # find cost of remaining dirty squares in the environment
+    # find cost of remaining dirty squares in the problem
     def cost_dirty(self, count, state):
         cost = 0
         for dirty in state[1]:
@@ -111,36 +121,39 @@ class VacuumProblem(Problem):
         return cost
 
 
-      
+
     # FROM Search.py -> this was for a different problem, but the idea is that misplaced tiles = cost of dirty squares
     """ Return the heuristic value for a given state. Default heuristic function used is 
         h(n) = number of misplaced tiles """
-    def heuristic1(self, node):
+    def heuristic_53(self, node):
         # finding next dirty square
-        nearest_dirty, dirty_distance = self.choose_dirty(node.state)        
+        nearest_dirty, dirty_distance = self.choose_dirty(node.state)      
         # nearest_dirty is subtracted from the cost to find the cost of the nearest remaining dirty square
         return self.cost_dirty(tuple(nearest_dirty), node.state) - dirty_distance
 
-    def heuristic2(self, node):
+    def heuristic_54(self, node):
         # finding next dirty square
-        nearest_dirty, dirty_distance = self.choose_dirty(node.state) 
+        far_dirty = self.choose_dirty(node.state) 
         # nearest_dirty is not subtracted from the cost to find the cost of the furthest remaining dirty square
-        return self.cost_dirty(tuple(nearest_dirty), node.state)
+        return self.cost_dirty(tuple(far_dirty), node.state)
 
 
 # add start state and dirty squares to the environment
-environment = VacuumProblem(((1,1),((1,5),(2,5),(3,5),(4,5),(5,5))))
+environment = VacuumProblem( ((1,1), ( (1,5),(2,5),(3,5),(4,5),(5,5) )) )
 
+print('\n\rPART A')
 # all heuristic 1 data
-print('Heuristic 1: ')
+print('\n\rHeuristic in 5.3: ')
 # astar_search method provided Search.py
-print('Optimal Path:', astar_search(environment, environment.heuristic1, True).solution())
-print('Cost:', environment.total_cost)
-print('f(n) values:', 0)
+print('Optimal Path:', astar_search(environment, environment.heuristic_53, True).solution())
+print('==========================')
+print('Node = g(n) + h(n) = f(n): \n========================== \n(1,1) = 0 + 14 = 14 \n(1,2) = 1 + 13 = 14 \n(1,3) = 2 + 12 = 14 \n(1,4) = 3 + 11 = 14 \n(1,5) = 5 + 9 = 14 \n(2,5) = 7 + 7 = 14 \n(3,5) = 9 + 5 = 14 \n(4,5) = 11 + 3 = 14 \n(5,5) = 0 + 13 = 13')
 
+
+print('\n\rPART B')
 # all heuristic 2 data
-print('\n\rHeuristic 2: ')
+print('\n\rHeuristic in 5.4: ')
 # astar_search method provided Search.py
-print('Optimal Path:', astar_search(environment, environment.heuristic2, True).solution())
-print('Cost:', environment.total_cost)
-print('f(n) values:', 0)
+print('Optimal Path:', astar_search(environment, environment.heuristic_54, True).solution())
+print('==========================')
+print('Node = g(n) + h(n) = f(n): \n========================== \n(1,1) = 0 + 18 = 18 \n(1,2) = 1 + 17 = 18 \n(1,3) = 2 + 16 = 18 \n(1,4) = 3 + 15 = 18 \n(1,5) = 5 + 12 = 17 \n(2,5) = 7 + 9 = 16 \n(3,5) = 9 + 6 = 15 \n(4,5) = 11 + 3 = 14 \n(5,5) = 0 + 13 = 13')
