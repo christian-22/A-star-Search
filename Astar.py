@@ -95,7 +95,7 @@ class VacuumProblem(Problem):
                 nearest_dirty_square = [dirty, dirty_distance]        
         return nearest_dirty_square
 
-    # chooses next dirty square to be cleaned by the vacuum based on smallest distance to current state
+    # chooses next dirty square to be cleaned by the vacuum based on farthest distance from the current state
     def far_dirty(self, state):
         farthest_dirty_square = [[0,0], 5]
         # distance between current state and dirty squares
